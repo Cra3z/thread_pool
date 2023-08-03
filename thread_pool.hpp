@@ -9,6 +9,7 @@
 #include <condition_variable>
 #include <stdexcept>
 #include <memory>
+#include <functional>
 
 namespace ccat {
 
