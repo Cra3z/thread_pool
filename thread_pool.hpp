@@ -27,6 +27,11 @@ public:
             workers_.emplace_back(std::bind(&thread_pool::fetch_and_finish_task_, this));
         }
     }
+    thread_pool(const thread_pool&) = delete;
+    thread_pool(thread_pool&&) = delete;
+    auto operator= (const thread_pool&) ->thread_pool& = delete;
+    auto operator= (thread_pool&&) ->thread_pool& = delete;
+
     template<typename F, typename... Args>
     auto submit(F&& f, Args&&... args) ->std::future<result_of<F, Args...>> {
         if (stop_) throw std::runtime_error{"submit task after thread pool shutdown"};
