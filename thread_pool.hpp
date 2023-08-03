@@ -97,7 +97,7 @@ private:
     size_t worker_cnt_;
     std::atomic<size_t> busy_worker_cnt_;
     std::atomic<bool> stop_;
-    std::condition_variable cv_, cv_1_; // cv_: queue empty or pool stop, cv_1_: tasks finished
+    std::condition_variable cv_, cv_1_;
     std::mutex mtx_;
     std::list<std::thread> workers_;
     std::queue<task_wrapper> task_queue_;
