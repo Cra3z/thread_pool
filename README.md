@@ -8,7 +8,7 @@ Implement for thread pool(minimum required c++ standard: C++11)
 * `shutdown(bool wait)`: 关闭线程池, 若参数`wait`为`true`则会先调用`wait_until_all_tasks_finished()`等待所有任务完成
 * `max_worker_count()`: 线程池中的线程数
 * `current_busy_worker_count()`: 当前正在工作的线程数
-* `get_all_worker_ids()`: 将线程池中所有线程id以std::vector<std::thread::id>的形式返回
+* `get_all_worker_ids()`: 将线程池中所有线程的id以std::vector<std::thread::id>的形式返回
 * `~thread_pool()`: 若当前线程池未关闭, 则自动调用`.wait_until_all_tasks_finished`
 # example
 ```c++
