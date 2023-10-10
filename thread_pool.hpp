@@ -35,7 +35,7 @@ public:
 
     template<typename F, typename... Args>
     auto submit(F&& f, Args&&... args) ->std::future<result_of<F, Args...>> {
-        if (stop_) throw std::runtime_error{"submit task after thread pool shutdown"};
+        if (stop_) return std::async(std::launch::deferred, std::forward<F>(f), std::forward<Arg>(args)...);
         using rt = result_of<F, Args...>;
         auto pptask = std::make_shared<std::packaged_task<rt()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
         auto future_ = pptask->get_future();
@@ -60,7 +60,7 @@ public:
         if (stop_) return;
         std::unique_lock<std::mutex> ulk{mtx_};
         cv_1_.wait(ulk, [this]{
-            return task_queue_.empty();
+            return task_queue_.empty() && current_busy_worker_count() == 0;
         });
     }
     auto max_worker_count() noexcept ->size_t {
