@@ -63,6 +63,9 @@ public:
             return task_queue_.empty() && current_busy_worker_count() == 0;
         });
     }
+    auto has_been_shutdown() noexcept ->bool {
+        return stop_;
+    } 
     auto max_worker_count() noexcept ->size_t {
         return worker_cnt_;
     }
